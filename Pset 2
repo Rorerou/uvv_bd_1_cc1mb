@@ -1,0 +1,8 @@
+SELECT AVG(salario) FROM funcionario;
+
+SELECT AVG(salario) 
+FROM funcionario
+WHERE sexo = 'F';
+SELECT AVG(salario) 
+FROM funcionario
+WHERE sexo = 'M';
