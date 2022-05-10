@@ -6,3 +6,14 @@ WHERE sexo = 'F';
 SELECT AVG(salario) 
 FROM funcionario
 WHERE sexo = 'M';
+
+SELECT nome_departamento FROM departamento 
+WHERE nome_departamento (SELECT primeiro_nome,nome_meio,ultimo_nome,data_nascimento,DATEDIFF(YY,data_nascimento, GETDATE()) AS salario
+FROM funcionario;
+
+SELECT primeiro_nome,nome_meio AS ultimo nome
+FROM funcionario
+WHERE cpf_supervisor IS NULL (SELECT nome_departamento,salario)
+FROM departamento, funcionario 
+ORDER BY nome_departamento ASC 
+ORDER BY salario DESC;
