@@ -8,12 +8,18 @@ FROM funcionario
 WHERE sexo = 'M';
 
 SELECT nome_departamento FROM departamento 
-WHERE nome_departamento (SELECT primeiro_nome,nome_meio,ultimo_nome,data_nascimento,DATEDIFF(YY,data_nascimento, GETDATE()) AS salario
-FROM funcionario;
+WHERE nome_departamento (SELECT primeiro_nome,nome_meio,ultimo_nome,data_nascimento,DATEDIFF(YY,data_nascimento, GETDATE()) ,salario
+FROM funcionario);
 
-SELECT primeiro_nome,nome_meio AS ultimo nome
+SELECT primeiro_nome,nome_meio,ultimo_nome
 FROM funcionario
 WHERE cpf_supervisor IS NULL (SELECT nome_departamento,salario)
 FROM departamento, funcionario 
 ORDER BY nome_departamento ASC 
 ORDER BY salario DESC;
+
+SELECT primeiro_nome,nome_meio, ultimo_nome,nome_departamento
+FROM funcionario,departamento
+WHERE cpf = cpf_funcionario 
+(SELECT nome_dependente, DATEDIFF(YY,data_nascimento, GETDATE()),sexo 
+FROM dependente WHERE F = 'Feminino' AND M = 'Masculino');
