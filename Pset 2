@@ -1,5 +1,7 @@
+--QUESTÃO 1
 SELECT AVG(salario) FROM funcionario;
 
+--QUESTÃO 2
 SELECT AVG(salario) 
 FROM funcionario
 WHERE sexo = 'F';
@@ -7,19 +9,71 @@ SELECT AVG(salario)
 FROM funcionario
 WHERE sexo = 'M';
 
+--QUESTÃO 3
 SELECT nome_departamento FROM departamento 
 WHERE nome_departamento (SELECT primeiro_nome,nome_meio,ultimo_nome,data_nascimento,DATEDIFF(YY,data_nascimento, GETDATE()) ,salario
 FROM funcionario);
 
+--QUESTÃO 4
+
+SELECT primeiro_nome,nome_meio,ultimo_nome,data_nascimento,DATEDIFF(YY,data_nascimento, GETDATE()) ,salario
+FROM funcionario
+WHERE salario < 35000 AS salario*1.20 AND salario >= 35000 AS salario*1.15;
+--QUESTÃO 5
 SELECT primeiro_nome,nome_meio,ultimo_nome
 FROM funcionario
-WHERE cpf_supervisor IS NULL (SELECT nome_departamento,salario)
+WHERE cpf_supervisor = cpf (SELECT nome_departamento,salario)
 FROM departamento, funcionario 
 ORDER BY nome_departamento ASC 
 ORDER BY salario DESC;
 
+--QUESTÃO 6
 SELECT primeiro_nome,nome_meio, ultimo_nome,nome_departamento
 FROM funcionario,departamento
 WHERE cpf = cpf_funcionario 
 (SELECT nome_dependente, DATEDIFF(YY,data_nascimento, GETDATE()),sexo 
 FROM dependente WHERE F = 'Feminino' AND M = 'Masculino');
+
+--QUESTÃO 7
+SELECT primeiro_nome,nome_meio, ultimo_nome,nome_departamento,salario
+FROM funcionario,departamento,dependente
+WHERE parentesco = NULL;
+
+--QUESTÃO 8
+SELECT numero_departamento,primeiro_nome,nome_meio, ultimo_nome,horas
+FROM projeto,funcionario,trabalha_em;
+
+--QUESTÃO 9
+SELECT SUM(horas) AND nome_departamento 
+FROM trabalha_em,funcionario JOIN departamento 
+WHERE cpf = cpf_funcionario;
+
+--QUESTÃO 10
+SELECT AVG(salario)
+FROM funcionario JOIN departamento;
+
+--QUESTÃO 11
+SELECT primeiro_nome,nome_meio, ultimo_nome,nome_projeto,salario,horas
+FROM funcionario,projeto,trabalha_em
+WHERE salario = horas*50;
+
+--QUESTÃO 12
+SELECT primeiro_nome,nome_meio, ultimo_nome,nome_projeto,nome_departamento
+FROM funcionario,projeto,trabalha_em
+WHERE horas = NULL;
+
+--QUESTÃO 13
+SELECT primeiro_nome,nome_meio, ultimo_nome,nome_projeto,nome_dependete,sexo,DATEDIFF(YY,data_nascimento, GETDATE())
+FROM funcionario,dependente
+ORDER BY DATEDIFF(YY,data_nascimento, GETDATE()) DESC;
+
+--QUESTÃO 14
+SELECT COUNT(cpf_gerente)
+FROM funcionario;
+
+--QUESTÃO 15
+SELECT primeiro_nome,nome_meio,ultimo_nome,nome_departamento,nome_projeto
+FROM funcionario,projeto,departamento
+WHERE NOT EXISTS ((SELECT numero_projeto
+						  FROM projeto
+						  WHERE numero_projeto = 0);
